@@ -96,7 +96,7 @@ def get_app_layout():
                         'border': 'none', 'borderRadius': '5px', 'cursor': 'pointer', 'fontSize': '16px'
                     }),
                     html.Div("Time Progress:", style={'marginTop': '20px', 'fontWeight': 'bold', 'color': '#34495e'}),
-                    dcc.Slider(id="time-scrubber", min=0, max=80, step=0.5, value=80, marks={0: '0ms', 50: '50ms (End Inputs)', 80: '80ms'}, tooltip={"placement": "bottom", "always_visible": True}),
+                    dcc.Slider(id="time-scrubber", min=0, max=120, step=0.5, value=120, marks={0: '0ms', 50: '50ms (End Inputs)', 120: '120ms'}, tooltip={"placement": "bottom", "always_visible": True}),
                     dcc.Store(id="is-playing", data=False),
                     dcc.Interval(id="interval-timer", interval=50, n_intervals=0, disabled=True)
                 ])

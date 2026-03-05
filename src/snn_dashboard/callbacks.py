@@ -51,7 +51,7 @@ def play_controls(play_clks, reset_clks, curr_time, is_playing):
         return True, False, "▶ Play Sequence", style_play
         
     elif trigger_id == 'time-scrubber':
-        if curr_time >= 80 and is_playing:
+        if curr_time >= 120 and is_playing:
             return True, False, "▶ Play Sequence", style_play
             
     return dash.no_update, dash.no_update, dash.no_update, dash.no_update
@@ -76,8 +76,8 @@ def advance_time(n_intervals, reset_clks, is_playing, current_time):
         
     if trigger_id == 'interval-timer' and is_playing:
         new_time = current_time + 1.0
-        if new_time > 80:
-            return 80
+        if new_time > 120:
+            return 120
         return new_time
         
     return dash.no_update

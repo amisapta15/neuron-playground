@@ -5,7 +5,7 @@ from plotly.subplots import make_subplots
 def compute_simulation_figure(spike_matrix, scrub_time, weights, taus, tau_m, v_th):
     # Simulation Settings
     dt = 0.5  # ms precision
-    T_total = 80.0 # ms simulation time
+    T_total = 120.0 # ms simulation time (increased for better viewing)
     time = np.arange(0, T_total + dt, dt)
     step_duration = 10.0 # ms between columns
     
@@ -65,16 +65,31 @@ def compute_simulation_figure(spike_matrix, scrub_time, weights, taus, tau_m, v_
         rows=3, cols=1, shared_xaxes=True, 
         subplot_titles=[
             'Synaptic Voltages (Exponential Decay)',
-            'Accumulated Input Current $I_{total}(t)$', 
-            'Neuron Membrane Potential $V_m(t)$ & Spiking'
+            'Accumulated Total Input Current', 
+            'Neuron Membrane Potential & Spiking'
         ], vertical_spacing=0.1
     )
-                        
     colors = ['#e74c3c', '#27ae60', '#2980b9']
+    
+    # 1. Overlay background pulses for active synapses
+    for c in range(5):
+        pulse_time = c * step_duration
+        if pulse_time <= scrub_time:
+            for r in range(3):
+                if spike_matrix[r, c] == 1:
+                    # Draw a semi-transparent vertical bar for the pulse
+                    fig.add_shape(
+                        type="rect", xref="x", yref="y",
+                        x0=pulse_time-0.5, y0=0, x1=pulse_time+0.5, y1=weights[r],
+                        fillcolor=colors[r], opacity=0.3, line_width=0, row=1, col=1
+                    )
+    
+    # 2. Add traces
     for i in range(3):
         fig.add_trace(go.Scatter(x=time_plot, y=V_syn_plot[i], mode='lines', name=f'Synapse {i+1}', line=dict(color=colors[i], width=2)), row=1, col=1)
         
-    fig.add_trace(go.Scatter(x=time_plot, y=I_plot, mode='lines', name='Total Current', line=dict(color='#8e44ad', width=2)), row=2, col=1)
+    # Fill the area under the total current curve to emphasize linear accumulation
+    fig.add_trace(go.Scatter(x=time_plot, y=I_plot, mode='lines', name='Total Current', fill='tozeroy', fillcolor='rgba(142, 68, 173, 0.2)', line=dict(color='#8e44ad', width=2)), row=2, col=1)
     
     fig.add_trace(go.Scatter(x=time_plot, y=V_m_plot, mode='lines', name='Membrane Potential', line=dict(color='#2c3e50', width=2)), row=3, col=1)
     
