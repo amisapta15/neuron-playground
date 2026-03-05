@@ -8,4 +8,4 @@ app.layout = get_app_layout()
 
 if __name__ == '__main__':
     print("Starting SNN Dashboard. Please ensure you have installed the requirements.")
-    app.run_server(debug=True, port=8050)
+    app.run(debug=True, port=8050)
