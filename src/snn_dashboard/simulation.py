@@ -65,8 +65,8 @@ def compute_simulation_figure(spike_matrix, scrub_time, weights, taus, tau_m, v_
         rows=3, cols=1, shared_xaxes=True, 
         subplot_titles=[
             'Synaptic Voltages (Exponential Decay)',
-            'Accumulated Total Input Current', 
-            'Neuron Membrane Potential & Spiking'
+            'Accumulated Total Input Current $\\sum I_{syn}(t)$', 
+            'Neuron Membrane Potential $V_m(t)$ & Spiking'
         ], vertical_spacing=0.1
     )
     colors = ['#e74c3c', '#27ae60', '#2980b9']

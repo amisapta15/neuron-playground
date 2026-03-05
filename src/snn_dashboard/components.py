@@ -24,11 +24,14 @@ def create_matrix():
     for r in range(3):
         cols = [html.Div(f"Synapse {r+1}:", style={'width': '100px', 'fontWeight': 'bold', 'textAlign': 'right', 'paddingRight': '10px'})]
         for c in range(5):
+            is_spike = (r, c) in [(0, 1), (1, 2), (2, 3)]
+            val = "1" if is_spike else "0"
+            btn_style = BTN_STYLE_1 if is_spike else BTN_STYLE_0
             btn = html.Button(
-                "0",
+                val,
                 id={'type': 'matrix-btn', 'row': r, 'col': c},
-                n_clicks=0,
-                style=BTN_STYLE_0
+                n_clicks=1 if is_spike else 0,
+                style=btn_style
             )
             cols.append(btn)
         rows.append(html.Div(cols, style={'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center'}))
@@ -37,7 +40,11 @@ def create_matrix():
 def get_app_layout():
     return html.Div(style={'fontFamily': 'Arial, sans-serif', 'padding': '20px', 'backgroundColor': '#f4f6f9', 'minHeight': '100vh'}, children=[
         html.H1("Spiking Neural Network (SNN) Integration & Firing", style={'textAlign': 'center', 'color': '#2c3e50', 'marginBottom': '5px'}),
-        html.P("Interactive Plotly Dash WebApp for Synaptic Integration and LIF Neuron Dynamics", style={'textAlign': 'center', 'color': '#7f8c8d', 'marginBottom': '30px'}),
+        html.P("Interactive Plotly Dash WebApp for Synaptic Integration and LIF Neuron Dynamics", style={'textAlign': 'center', 'color': '#7f8c8d', 'marginBottom': '20px'}),
+        
+        html.Div([
+            html.Img(src='/assets/snn_unit_diagram.png', style={'maxWidth': '800px', 'width': '100%', 'display': 'block', 'margin': '0 auto 30px auto', 'borderRadius': '10px', 'boxShadow': '0 4px 6px rgba(0,0,0,0.1)'})
+        ]),
         
         html.Div([
             # Left Panel: Knobs/Controls
@@ -70,9 +77,9 @@ def get_app_layout():
                 
                 html.Hr(),
                 html.H3("Neuron Parameters (LIF)", style={'color': '#34495e'}),
-                html.Div("Membrane Time Constant τ_m (ms):"),
+                dcc.Markdown("**Membrane Time Constant** $\\tau_m$ (ms):", mathjax=True),
                 dcc.Slider(id='tau-m', min=5, max=50, step=5, value=20, marks={i: str(i) for i in range(10, 51, 10)}),
-                html.Div("Firing Threshold ($V_{th}$):", style={'marginTop': '10px'}),
+                dcc.Markdown("**Firing Threshold** ($V_{th}$):", mathjax=True, style={'marginTop': '10px'}),
                 dcc.Slider(id='v-th', min=1.0, max=10.0, step=0.5, value=3.0, marks={i: str(i) for i in range(2, 11, 2)}),
             ]),
             
@@ -105,6 +112,6 @@ def get_app_layout():
         
         # Bottom Panel: Simulation Plots
         html.Div(style={'backgroundColor': 'white', 'padding': '20px', 'borderRadius': '10px', 'boxShadow': '0 4px 6px rgba(0,0,0,0.1)'}, children=[
-            dcc.Graph(id='simulation-plot', config={'displayModeBar': False})
+            dcc.Graph(id='simulation-plot', config={'displayModeBar': False}, mathjax=True)
         ])
     ])

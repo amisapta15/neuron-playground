@@ -5,7 +5,8 @@ from src.snn_dashboard.components import get_app_layout
 import src.snn_dashboard.callbacks
 
 app.layout = get_app_layout()
+server = app.server
 
 if __name__ == '__main__':
     print("Starting SNN Dashboard.")
-    app.run(debug=True, port=8050)
+    app.run(debug=False, port=8050)
