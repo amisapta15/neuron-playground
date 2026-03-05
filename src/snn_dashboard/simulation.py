@@ -17,7 +17,7 @@ def compute_simulation_figure(spike_matrix, scrub_time, weights, taus, tau_m, v_
     spikes_y = []
     
     # Handle inputs exactly at t=0 before loop
-    if time[0] <= 40:
+    if time[0] <= T_total:
         for syn_idx in range(3):
             if spike_matrix[syn_idx, 0] == 1:
                 V_syn[syn_idx, 0] += weights[syn_idx]
@@ -30,7 +30,7 @@ def compute_simulation_figure(spike_matrix, scrub_time, weights, taus, tau_m, v_
             V_syn[syn_idx, t_idx] = max(0, V_syn[syn_idx, t_idx-1] + dV_syn)
             
         # 2. Add Spikes arriving exactly at this time
-        if time[t_idx] <= 40 and abs(time[t_idx] % step_duration) < 1e-5:
+        if time[t_idx] <= T_total and abs(time[t_idx] % step_duration) < 1e-5:
             col = int(round(time[t_idx] / step_duration))
             # avoid index errors
             if col < spike_matrix.shape[1]: 
@@ -72,7 +72,7 @@ def compute_simulation_figure(spike_matrix, scrub_time, weights, taus, tau_m, v_
     colors = ['#e74c3c', '#27ae60', '#2980b9']
     
     # 1. Overlay background pulses for active synapses
-    for c in range(5):
+    for c in range(13):
         pulse_time = c * step_duration
         if pulse_time <= scrub_time:
             for r in range(3):

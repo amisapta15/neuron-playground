@@ -15,15 +15,15 @@ def create_matrix():
     rows = []
     # Header row for time
     header = html.Div([
-        html.Div("Time:", style={'width': '100px', 'fontWeight': 'bold', 'textAlign': 'right', 'paddingRight': '10px'})] + 
-        [html.Div(f"{t}ms", style={'width': '50px', 'textAlign': 'center', 'margin': '2px'}) for t in [0, 10, 20, 30, 40]],
+        html.Div("Time:", style={'width': '100px', 'fontWeight': 'bold', 'textAlign': 'right', 'paddingRight': '10px', 'flexShrink': 0})] + 
+        [html.Div(f"{t}ms", style={'width': '50px', 'textAlign': 'center', 'margin': '2px', 'flexShrink': 0}) for t in range(0, 130, 10)],
         style={'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center', 'marginBottom': '5px'}
     )
     rows.append(header)
     
     for r in range(3):
-        cols = [html.Div(f"Synapse {r+1}:", style={'width': '100px', 'fontWeight': 'bold', 'textAlign': 'right', 'paddingRight': '10px'})]
-        for c in range(5):
+        cols = [html.Div(f"Synapse {r+1}:", style={'width': '100px', 'fontWeight': 'bold', 'textAlign': 'right', 'paddingRight': '10px', 'flexShrink': 0})]
+        for c in range(13):
             is_spike = (r, c) in [(0, 1), (1, 2), (2, 3)]
             val = "1" if is_spike else "0"
             btn_style = BTN_STYLE_1 if is_spike else BTN_STYLE_0
@@ -35,16 +35,12 @@ def create_matrix():
             )
             cols.append(btn)
         rows.append(html.Div(cols, style={'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center'}))
-    return html.Div(rows)
+    return html.Div(rows, style={'overflowX': 'auto', 'paddingBottom': '10px'})
 
 def get_app_layout():
     return html.Div(style={'fontFamily': 'Arial, sans-serif', 'padding': '20px', 'backgroundColor': '#f4f6f9', 'minHeight': '100vh'}, children=[
         html.H1("Spiking Neural Network (SNN) Integration & Firing", style={'textAlign': 'center', 'color': '#2c3e50', 'marginBottom': '5px'}),
         html.P("Interactive Plotly Dash WebApp for Synaptic Integration and LIF Neuron Dynamics", style={'textAlign': 'center', 'color': '#7f8c8d', 'marginBottom': '20px'}),
-        
-        html.Div([
-            html.Img(src='/assets/snn_unit_diagram.png', style={'maxWidth': '800px', 'width': '100%', 'display': 'block', 'margin': '0 auto 30px auto', 'borderRadius': '10px', 'boxShadow': '0 4px 6px rgba(0,0,0,0.1)'})
-        ]),
         
         html.Div([
             # Left Panel: Knobs/Controls

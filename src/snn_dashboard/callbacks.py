@@ -93,7 +93,7 @@ def advance_time(n_intervals, reset_clks, is_playing, current_time):
     Input('tau-m', 'value'), Input('v-th', 'value')
 )
 def update_simulation_plot(matrix_vals, scrub_time, w0, t0, w1, t1, w2, t2, tau_m, v_th):
-    spike_matrix = np.zeros((3, 5))
+    spike_matrix = np.zeros((3, 13))
     ctx = dash.callback_context
     try:
         if ctx.inputs_list:
