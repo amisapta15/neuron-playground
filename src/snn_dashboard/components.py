@@ -39,8 +39,8 @@ def create_matrix():
 
 def get_app_layout():
     return html.Div(style={'fontFamily': 'Arial, sans-serif', 'padding': '20px', 'backgroundColor': '#f4f6f9', 'minHeight': '100vh'}, children=[
-        html.H1("Spiking Neural Network (SNN) Integration & Firing", style={'textAlign': 'center', 'color': '#2c3e50', 'marginBottom': '5px'}),
-        html.P("Interactive Plotly Dash WebApp for Synaptic Integration and LIF Neuron Dynamics", style={'textAlign': 'center', 'color': '#7f8c8d', 'marginBottom': '20px'}),
+        html.H1("Spiking Neural Network (SNN) Playground", style={'textAlign': 'center', 'color': '#2c3e50', 'marginBottom': '5px'}),
+        html.P("LIF Neuron Dashboard for Synaptic Integration and Dynamics", style={'textAlign': 'center', 'color': '#7f8c8d', 'marginBottom': '20px'}),
         
         html.Div([
             # Left Panel: Knobs/Controls
