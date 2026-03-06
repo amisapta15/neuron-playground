@@ -1,3 +1,4 @@
+import os
 from src.snn_dashboard.app_instance import app
 from src.snn_dashboard.components import get_app_layout
 
@@ -9,4 +10,5 @@ server = app.server
 
 if __name__ == '__main__':
     print("Starting SNN Dashboard.")
-    app.run(debug=True,port=8051)
+    port = int(os.environ.get("PORT", 8051))
+    app.run(debug=False, host='0.0.0.0', port=port)
