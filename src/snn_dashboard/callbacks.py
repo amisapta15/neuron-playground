@@ -11,10 +11,13 @@ from .simulation import compute_simulation_figure
     Output({'type': 'matrix-btn', 'row': MATCH, 'col': MATCH}, 'children'),
     Output({'type': 'matrix-btn', 'row': MATCH, 'col': MATCH}, 'style'),
     Input({'type': 'matrix-btn', 'row': MATCH, 'col': MATCH}, 'n_clicks'),
-    State({'type': 'matrix-btn', 'row': MATCH, 'col': MATCH}, 'children'),
-    prevent_initial_call=True
+    State({'type': 'matrix-btn', 'row': MATCH, 'col': MATCH}, 'children')
 )
 def toggle_button(n_clicks, current_state):
+    ctx = dash.callback_context
+    if not ctx.triggered or ctx.triggered[0]['prop_id'] == '.':
+        return dash.no_update, dash.no_update
+        
     if current_state == "0":
         return "1", BTN_STYLE_1
     return "0", BTN_STYLE_0
