@@ -39,8 +39,9 @@ def create_matrix():
 
 def get_app_layout():
     return html.Div(style={'fontFamily': 'Arial, sans-serif', 'padding': '20px', 'backgroundColor': '#f4f6f9', 'minHeight': '100vh'}, children=[
-        html.H1("Spiking Neural Network (SNN) Playground", style={'textAlign': 'center', 'color': '#2c3e50', 'marginBottom': '5px'}),
-        html.P("LIF Neuron Dashboard for Synaptic Integration and Dynamics", style={'textAlign': 'center', 'color': '#7f8c8d', 'marginBottom': '20px'}),
+        html.H1("Spiking Neural Network (SNN) Playground", style={'textAlign': 'center', 'color': '#FF6A00', 'marginBottom': '5px'}),
+        html.H2("with Leaky Integrate-and-Fire Neurons", style={'textAlign': 'center', 'color': '#0094FF'  , 'marginBottom': '5px'}),
+        html.P("Interactive Dashboard for Synaptic Integration and Dynamics", style={'textAlign': 'center', 'color': '#7f8c8d', 'marginBottom': '20px'}),
         
         html.Div([
             # Left Panel: Knobs/Controls
@@ -73,9 +74,9 @@ def get_app_layout():
                 
                 html.Hr(),
                 html.H3("Neuron Parameters (LIF)", style={'color': '#34495e'}),
-                dcc.Markdown("**Membrane Time Constant** $\\tau_m$ (ms):", mathjax=True),
+                html.Div("Membrane Time Constant τ_m (ms):", style={'fontWeight': 'bold', 'marginTop': '10px'}),
                 dcc.Slider(id='tau-m', min=5, max=50, step=5, value=20, marks={i: str(i) for i in range(10, 51, 10)}),
-                dcc.Markdown("**Firing Threshold** ($V_{th}$):", mathjax=True, style={'marginTop': '10px'}),
+                html.Div("Firing Threshold (V_th):", style={'fontWeight': 'bold', 'marginTop': '10px'}),
                 dcc.Slider(id='v-th', min=1.0, max=10.0, step=0.5, value=3.0, marks={i: str(i) for i in range(2, 11, 2)}),
             ]),
             
@@ -108,6 +109,6 @@ def get_app_layout():
         
         # Bottom Panel: Simulation Plots
         html.Div(style={'backgroundColor': 'white', 'padding': '20px', 'borderRadius': '10px', 'boxShadow': '0 4px 6px rgba(0,0,0,0.1)'}, children=[
-            dcc.Graph(id='simulation-plot', config={'displayModeBar': False}, mathjax=True)
+            dcc.Graph(id='simulation-plot', config={'displayModeBar': False})
         ])
     ])

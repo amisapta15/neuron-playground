@@ -65,8 +65,8 @@ def compute_simulation_figure(spike_matrix, scrub_time, weights, taus, tau_m, v_
         rows=3, cols=1, shared_xaxes=True, 
         subplot_titles=[
             'Synaptic Voltages (Exponential Decay)',
-            'Accumulated Total Input Current $\\sum I_{syn}(t)$', 
-            'Neuron Membrane Potential $V_m(t)$ & Spiking'
+            'Accumulated Total Input Current (Sum of I_syn)', 
+            'Neuron Membrane Potential (V_m) & Spiking'
         ], vertical_spacing=0.1
     )
     colors = ['#e74c3c', '#27ae60', '#2980b9']
@@ -122,8 +122,13 @@ def compute_simulation_figure(spike_matrix, scrub_time, weights, taus, tau_m, v_
     fig.update_xaxes(range=[0, T_total], showgrid=True, gridcolor='#ecf0f1', row=1, col=1)
     fig.update_xaxes(range=[0, T_total], showgrid=True, gridcolor='#ecf0f1', row=2, col=1)
     
-    fig.update_yaxes(title_text="mV", range=[0, max(6, np.max(V_syn)+1)], showgrid=True, gridcolor='#ecf0f1', row=1, col=1)
-    fig.update_yaxes(title_text="mA", range=[0, max(8, np.max(I_total)+1)], showgrid=True, gridcolor='#ecf0f1', row=2, col=1)
-    fig.update_yaxes(title_text="mV", range=[min(-1, np.min(V_m)-0.5), max(v_th+2, np.max(V_m)+0.5)], showgrid=True, gridcolor='#ecf0f1', row=3, col=1)
+    v_syn_max = np.max(V_syn_plot) if V_syn_plot.size > 0 else 0
+    i_total_max = np.max(I_plot) if I_plot.size > 0 else 0
+    v_m_min = np.min(V_m_plot) if V_m_plot.size > 0 else 0
+    v_m_max = np.max(V_m_plot) if V_m_plot.size > 0 else 0
+    
+    fig.update_yaxes(title_text="mV", range=[0, max(6, v_syn_max+1)], showgrid=True, gridcolor='#ecf0f1', row=1, col=1)
+    fig.update_yaxes(title_text="mA", range=[0, max(8, i_total_max+1)], showgrid=True, gridcolor='#ecf0f1', row=2, col=1)
+    fig.update_yaxes(title_text="mV", range=[min(-1, v_m_min-0.5), max(v_th+2, v_m_max+0.5)], showgrid=True, gridcolor='#ecf0f1', row=3, col=1)
                         
     return fig

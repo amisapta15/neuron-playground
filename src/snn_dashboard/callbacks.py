@@ -96,12 +96,13 @@ def update_simulation_plot(matrix_vals, scrub_time, w0, t0, w1, t1, w2, t2, tau_
     spike_matrix = np.zeros((3, 13))
     ctx = dash.callback_context
     try:
-        if ctx.inputs_list:
-            for inp in ctx.inputs_list[0]:
-                row = inp['id']['row']
-                col = inp['id']['col']
-                spike_matrix[row, col] = int(inp['value'])
-    except Exception as e:
+        if matrix_vals:
+            for idx, (row, col) in enumerate([(r, c) for r in range(3) for c in range(13)]):
+                if idx < len(matrix_vals):
+                    val = matrix_vals[idx]
+                    if val is not None:
+                        spike_matrix[row, col] = int(val)
+    except (ValueError, TypeError, IndexError):
         pass
         
     weights = [w0, w1, w2]
